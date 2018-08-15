@@ -68,3 +68,7 @@ For a full list, please see the environment variables which are set in the `dock
     ├── docker-compose.yml      # docker-compose orchestration file
     └── README.md
  
+## License
+GNU General Public License v3.0
+
+See [COPYING](COPYING) to see the full text.
