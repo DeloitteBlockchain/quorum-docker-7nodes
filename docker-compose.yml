@@ -1,0 +1,177 @@
+version: '3'
+
+services:
+  quorum-builder:
+    image: quorum-builder
+    container_name: quorum-builder
+    build: 
+      context: ./quorum/builder
+      args:
+        - BUILD_FROM_MASTER=false
+        - QUORUM_VERSION=2.0.2
+        - CONSTELLATION_VERSION=0.3.2
+    networks:
+      quorum_net:
+        ipv4_address: '172.14.0.99'
+
+  quorum1:
+    build: 
+      context: ./quorum/
+      args:
+        - VAR_NODE_ID=1
+    networks:
+      quorum_net:
+        ipv4_address: '172.14.0.11'
+    volumes:
+      - ./logs/node1/:/quorum/qdata/logs/
+    ports:
+     - "21000:21000"
+     - "22000:22000"
+     - "9001:9001"
+    environment:
+      - RPCPORT=22000
+      - PORT=21000
+      - CONSTELLATION_OTHERNODES_URL=http://172.14.0.11:9001/
+      - CONSTELLATION_HOST=172.14.0.10
+      - CONSTELLATION_PORT=9001
+      - GETH_EXTRA_PARAMS=--unlock 0 --password passwords.txt --targetgaslimit 0x47b760
+
+  quorum2:
+    build: 
+      context: ./quorum/
+      args:
+        - VAR_NODE_ID=2
+    networks:
+      quorum_net:
+        ipv4_address: '172.14.0.12'
+    volumes:
+      - ./logs/node2/:/quorum/qdata/logs/
+    ports:
+     - "21001:21001"
+     - "22001:22001"
+     - "9002:9002"
+    environment:
+      - RPCPORT=22001
+      - PORT=21001
+      - CONSTELLATION_OTHERNODES_URL=http://172.14.0.11:9001/
+      - CONSTELLATION_HOST=172.14.0.12
+      - CONSTELLATION_PORT=9002
+      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760
+
+  quorum3:
+    build: 
+      context: ./quorum/
+      args:
+        - VAR_NODE_ID=3
+    networks:
+      quorum_net:
+        ipv4_address: '172.14.0.13'
+    volumes:
+      - ./logs/node3/:/quorum/qdata/logs/
+    ports:
+     - "21002:21002"
+     - "22002:22002"
+     - "9003:9003"
+    environment:
+      - RPCPORT=22002
+      - PORT=21002
+      - CONSTELLATION_OTHERNODES_URL=http://172.14.0.11:9001/
+      - CONSTELLATION_HOST=172.14.0.13
+      - CONSTELLATION_PORT=9003
+      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760
+  
+  quorum4:
+    build: 
+      context: ./quorum/
+      args:
+        - VAR_NODE_ID=4
+    networks:
+      quorum_net:
+        ipv4_address: '172.14.0.14'
+    volumes:
+      - ./logs/node4/:/quorum/qdata/logs/
+    ports:
+     - "21003:21003"
+     - "22003:22003"
+     - "9004:9004"
+    environment:
+      - RPCPORT=22003
+      - PORT=21003
+      - CONSTELLATION_OTHERNODES_URL=http://172.14.0.11:9001/
+      - CONSTELLATION_HOST=172.14.0.14
+      - CONSTELLATION_PORT=9004
+      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760
+  
+  quorum5:
+    build: 
+      context: ./quorum/
+      args:
+        - VAR_NODE_ID=5
+    networks:
+      quorum_net:
+        ipv4_address: '172.14.0.15'
+    volumes:
+      - ./logs/node5/:/quorum/qdata/logs/
+    ports:
+     - "21004:21004"
+     - "22004:22004"
+     - "9005:9005"
+    environment:
+      - RPCPORT=22004
+      - PORT=21004
+      - CONSTELLATION_OTHERNODES_URL=http://172.14.0.11:9001/
+      - CONSTELLATION_HOST=172.14.0.15
+      - CONSTELLATION_PORT=9005
+      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760
+
+  quorum6:
+    build: 
+      context: ./quorum/
+      args:
+        - VAR_NODE_ID=6
+    networks:
+      quorum_net:
+        ipv4_address: '172.14.0.16'
+    volumes:
+      - ./logs/node6/:/quorum/qdata/logs/
+    ports:
+     - "21005:21005"
+     - "22005:22005"
+     - "9006:9006"
+    environment:
+      - RPCPORT=22005
+      - PORT=21005
+      - CONSTELLATION_OTHERNODES_URL=http://172.14.0.11:9001/
+      - CONSTELLATION_HOST=172.14.0.16
+      - CONSTELLATION_PORT=9006
+      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760
+
+  quorum7:
+    build: 
+      context: ./quorum/
+      args:
+        - VAR_NODE_ID=7
+    networks:
+      quorum_net:
+        ipv4_address: '172.14.0.17'
+    volumes:
+      - ./logs/node7/:/quorum/qdata/logs/
+    ports:
+     - "21006:21006"
+     - "22006:22006"
+     - "9007:9007"
+    environment:
+      - RPCPORT=22006
+      - PORT=21006
+      - CONSTELLATION_OTHERNODES_URL=http://172.14.0.11:9001/
+      - CONSTELLATION_HOST=172.14.0.17
+      - CONSTELLATION_PORT=9007
+      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760
+
+networks:
+  quorum_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.14.0.0/16
