@@ -4,17 +4,17 @@ This project is responsible for running 7 quorum nodes.
 It is more of a dev resource which makes developing and testing these projects easier using `docker-compose`.
 
 ## Prerequisites
- - Docker Engine and Docker Compose  (tested on Ubuntu and macOS, Docker 18.03.1-ce and docker-compose 1.21.0). In order to download the images required to run the project, access to internet is needed. Images could also take a considerable amount of disk space, make sure to have at lease 20GB free.
+ - Docker Engine and Docker Compose  (tested on Ubuntu and macOS, Docker 18.03.1-ce and docker-compose 1.21.0). In order to download the images required to run the project, you will need access to the internet. Images could also take a considerable amount of disk space, make sure to have at least 20GB free.
  
 ## Configuration
-- Quorum is a private blockchain network and only known nodes are allowed to be on chain. All nodes are configured under the `./quorum/permissioned-nodes.json`. Currently this file is being copied to all 7 nodes.
-- Quorum is configured to run with the Istanbul Byzantine Fault Tolerance (BFT) consensus protocol.
-- Some of the quorum accounts are configured with funds under the genesis file. This is to allow easy testing without worrying about mining new tokens. Other configurations were made, please check `./quorum/istanbul-genesis.json` for more details.
+- Quorum is a private blockchain network where only known nodes are allowed to be on chain. All nodes are configured under the `./quorum/permissioned-nodes.json`. Currently this file is being copied to all 7 nodes.
+- Quorum is configured to run with the Istanbul Byzantine Fault Tolerance (IBFT) consensus protocol.
+- Some of the quorum accounts are configured within the genesis file to start with initial funds. This is to allow easy testing without worrying about mining new tokens. Other configurations were made, please check `./quorum/istanbul-genesis.json` for more details.
 
 ## Adding more nodes
 
 ### Constellation Configuration
-- In order to configure a new constellation node, you need to create a pair of public/private keys. You can use the following command to achieve this: `constellation-node --generatekeys=<node-name>`. After that you can use this key pair on the constellation initialization, for more details check the script `./quorum/constellation-start.sh`
+- In order to configure a new constellation node, you will need to create a pair of public/private keys. You can use the following command to achieve this: `constellation-node --generatekeys=<node-name>`. After that you can use this key pair on the constellation initialization, for more details check the script `./quorum/constellation-start.sh`
 
 ### Quorum Configuration
 - In order to configure a new quorum node, first you need to generate a node key for the new instance. You can use the following command to achieve this: `bootnode --genkey=nodekey.key`.
@@ -23,10 +23,10 @@ It is more of a dev resource which makes developing and testing these projects e
 - If you want to initiate your new node with a geth account, you may create a new geth account by using the following command: `geth account new`. The new account will be stored in the keystore directory and you copy it to your new instance. Check the script `istanbul-init.sh` for more details about copying this file into the docker instance.
 
 ### Docker-Compose configuration
-- The configuration of a new node in the docker-compose file is straight forward. You just need to copy and past the configuration from another node and change the values according to the new node information.
+- The configuration of a new node in the docker-compose file is straight forward. You just need to copy and paste the configuration from another node and change the values according to the new node information.
 
 ## Network 
-Docker compose file is configured to startup all the nodes under the subnet 172.14.0.0/16. If you are running locally you may also refer to the nodes and servers using **localhost**.
+The docker-compose file is configured to startup all nodes under the subnet 172.14.0.0/16. If you are running locally you may also refer to the nodes and servers using **localhost**.
 
 ## Running Locally
 Run: `docker-compose up` (or  `docker-compose up -d` to run as daemon) in the project folder.
@@ -59,12 +59,10 @@ For a full list, please see the environment variables which are set in the `dock
  
 ## Folder structure [WIP]
     .
-    ├── .vscode                 # VS Code config files (recommended editor)
     ├── quorum                  # Files which will be used to configure the quorum and constellation nodes.
     ├── logs                    # Folder responsible to store the log files from the nodes. It could be changed by editing the docker-compose and docker files.
     ├── .dockerignore           # Files which will not be copied to containers
     ├── .gitignore              # Files which should not be checked into git
-    ├── .gitmodules             # git submodules file
     ├── docker-compose.yml      # docker-compose orchestration file
     └── README.md
  
