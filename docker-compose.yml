@@ -14,6 +14,16 @@ services:
       quorum_net:
         ipv4_address: '172.14.0.99'
 
+  eth-stats:
+    build: https://github.com/lucashenning/eth-netstats.git
+    ports:
+      - '3000:3000'
+    environment:
+      - WS_SECRET=secret
+    networks:
+      quorum_net:
+        ipv4_address: '172.14.0.77'
+
   quorum1:
     build: 
       context: ./quorum/
@@ -34,7 +44,7 @@ services:
       - CONSTELLATION_OTHERNODES_URL=http://172.14.0.11:9001/
       - CONSTELLATION_HOST=172.14.0.10
       - CONSTELLATION_PORT=9001
-      - GETH_EXTRA_PARAMS=--unlock 0 --password passwords.txt --targetgaslimit 0x47b760
+      - GETH_EXTRA_PARAMS=--unlock 0 --password passwords.txt --targetgaslimit 0x47b760 --ethstats quorum1:secret@eth-stats:3000
 
   quorum2:
     build: 
@@ -56,7 +66,7 @@ services:
       - CONSTELLATION_OTHERNODES_URL=http://172.14.0.11:9001/
       - CONSTELLATION_HOST=172.14.0.12
       - CONSTELLATION_PORT=9002
-      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760
+      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760 --ethstats quorum2:secret@eth-stats:3000
 
   quorum3:
     build: 
@@ -78,7 +88,7 @@ services:
       - CONSTELLATION_OTHERNODES_URL=http://172.14.0.11:9001/
       - CONSTELLATION_HOST=172.14.0.13
       - CONSTELLATION_PORT=9003
-      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760
+      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760 --ethstats quorum3:secret@eth-stats:3000
   
   quorum4:
     build: 
@@ -100,7 +110,7 @@ services:
       - CONSTELLATION_OTHERNODES_URL=http://172.14.0.11:9001/
       - CONSTELLATION_HOST=172.14.0.14
       - CONSTELLATION_PORT=9004
-      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760
+      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760 --ethstats quorum4:secret@eth-stats:3000
   
   quorum5:
     build: 
@@ -122,7 +132,7 @@ services:
       - CONSTELLATION_OTHERNODES_URL=http://172.14.0.11:9001/
       - CONSTELLATION_HOST=172.14.0.15
       - CONSTELLATION_PORT=9005
-      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760
+      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760 --ethstats quorum5:secret@eth-stats:3000
 
   quorum6:
     build: 
@@ -144,7 +154,7 @@ services:
       - CONSTELLATION_OTHERNODES_URL=http://172.14.0.11:9001/
       - CONSTELLATION_HOST=172.14.0.16
       - CONSTELLATION_PORT=9006
-      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760
+      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760 --ethstats quorum6:secret@eth-stats:3000
 
   quorum7:
     build: 
@@ -166,7 +176,7 @@ services:
       - CONSTELLATION_OTHERNODES_URL=http://172.14.0.11:9001/
       - CONSTELLATION_HOST=172.14.0.17
       - CONSTELLATION_PORT=9007
-      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760
+      - GETH_EXTRA_PARAMS=--targetgaslimit 0x47b760 --ethstats quorum7:secret@eth-stats:3000
 
 networks:
   quorum_net:
