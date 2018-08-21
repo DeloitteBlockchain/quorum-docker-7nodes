@@ -15,9 +15,11 @@ services:
         ipv4_address: '172.14.0.99'
 
   eth-stats:
-    build: https://github.com/lucashenning/eth-netstats.git
+    build: https://github.com/DeloitteBlockchain/eth-netstats.git
+    volumes:
+      - ./logs/eth-stats/:/usr/src/app/log/
     ports:
-      - '3000:3000'
+      - "3000:3000"
     environment:
       - WS_SECRET=secret
     networks:
