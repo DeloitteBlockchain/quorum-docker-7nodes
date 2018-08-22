@@ -49,6 +49,9 @@ Now:
     - http://172.14.0.16:9006
     - http://172.14.0.17:9007
 
+- **Eth Stats**:
+    - http://172.14.0.77:3000
+
 View the `docker-compose-*.yml` files for more information on these containers.
 
 
